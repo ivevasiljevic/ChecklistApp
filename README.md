@@ -28,6 +28,8 @@ In this version a couple of layouts have been added:
 
 Also, data package has been created and along with it new data class Task, that will hold all the information important for tasks. This is a starting point for implementing Room and will be expanded with it in later versions.
 
+### Navigation Component ([v0.0.3](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.3))
 
+In this version navigation component has been added. Firstly, navigation graph is created along with a new Fragment class which is connected to **Fragment Tasks** layout. Also, Main activity has been made as a Navigation host i.e. where fragments will be viewed and act as a container for them. Now when installing on a device (simulator or a physical device) **Fragment Tasks** can be seen.
 
 
