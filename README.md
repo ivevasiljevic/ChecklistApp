@@ -14,7 +14,7 @@ This project will be used as a playground to recite my Android Development skill
 * MVVM (Model-View-ViewModel)
 * ViewModel + LiveData
 
-### Master ([v0.0.1](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.1))
+### Project initialization ([v0.0.1](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.1))
 
 In this version project is completely setup and ready for work. All dependencies are inserted as well as drawable resources.
 
