@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //Default spacing dimensions
+    <dimen name="spacing_zero">0dp</dimen>
+    <dimen name="spacing_normal">10dp</dimen>
+    <dimen name="spacing_normal_semi">15dp</dimen>
+    <dimen name="spacing_double">20dp</dimen>
+
+    //Specific layout dimensions
+    <dimen name="item_task_height">40dp</dimen>
+
+</resources>
