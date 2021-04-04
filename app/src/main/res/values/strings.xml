@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">ChecklistApp</string>
+    
+    <string name="edit_add_task_edit_text_hint">Task name</string>
+    <string name="edit_add_task_checkbox_text">Important task</string>
 </resources>
