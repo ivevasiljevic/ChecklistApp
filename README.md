@@ -35,3 +35,7 @@ In this version navigation component has been added. Firstly, navigation graph i
 ### Room and dependency injection ([v0.0.4](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.4))
 
 In this version Room database and DAO has been setup. Also, as an important part of this project dependency injection using **Dagger Hilt** has been added for accessing database instance, DAO and other Android components (Fragments, Activities and Application class).
+
+### List adapter and View binding ([v0.0.5](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.5))
+
+In this version list adapter class has been added along with DiffUtil to properly show data for recycler view. In view model, using DAO data has been fetched and transformed into LiveData so that it can be observable from Fragment. 
