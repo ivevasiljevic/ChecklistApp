@@ -32,4 +32,6 @@ Also, data package has been created and along with it new data class Task, that 
 
 In this version navigation component has been added. Firstly, navigation graph is created along with a new Fragment class which is connected to **Fragment Tasks** layout. Also, Main activity has been made as a Navigation host i.e. where fragments will be viewed and act as a container for them. Now when installing on a device (simulator or a physical device) **Fragment Tasks** can be seen.
 
+### Room and dependency injection ([v0.0.4](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.4))
 
+In this version Room database and DAO has been setup. Also, as an important part of this project dependency injection using **Dagger Hilt** has been added for accessing database instance, DAO and other Android components (Fragments, Activities and Application class).
