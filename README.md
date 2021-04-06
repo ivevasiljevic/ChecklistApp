@@ -39,3 +39,7 @@ In this version Room database and DAO has been setup. Also, as an important part
 ### List adapter and View binding ([v0.0.5](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.5))
 
 In this version list adapter class has been added along with DiffUtil to properly show data for recycler view. In view model, using DAO data has been fetched and transformed into LiveData so that it can be observable from Fragment. 
+
+### Room search ([v0.0.6](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.6))
+
+In this version room search feature has been added using flow operators.

@@ -3,4 +3,11 @@
     
     <string name="edit_add_task_edit_text_hint">Task name</string>
     <string name="edit_add_task_checkbox_text">Important task</string>
+
+    <string name="menu_item_search_title">Search</string>
+    <string name="menu_item_sort_title">Sort</string>
+    <string name="menu_item_sort_by_name_title">Sort by name</string>
+    <string name="menu_item_sort_by_date_title">Sort by date</string>
+    <string name="menu_item_hide_completed_tasks_title">Hide completed</string>
+    <string name="menu_item_delete_completed_tasks_title">Delete completed</string>
 </resources>

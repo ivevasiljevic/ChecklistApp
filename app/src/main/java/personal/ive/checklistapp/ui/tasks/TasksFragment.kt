@@ -1,13 +1,18 @@
 package personal.ive.checklistapp.ui.tasks
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import personal.ive.checklistapp.R
 import personal.ive.checklistapp.databinding.FragmentTasksBinding
+import personal.ive.checklistapp.util.onQueryTextChanged
 
 /**
  * Created by ivasil on 4/4/2021
@@ -32,6 +37,42 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
 
         tasksViewModel.tasks.observe(viewLifecycleOwner) {
             tasksAdapter.submitList(it)
+        }
+
+        setHasOptionsMenu(true)
+    }
+
+    private fun setupOptionMenuSearchView(menu: Menu) {
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as SearchView
+
+        searchView.onQueryTextChanged {
+            tasksViewModel.searchQuery.value = it
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_fragment_tasks, menu)
+        setupOptionMenuSearchView(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when(item.itemId) {
+            R.id.action_sort_by_name -> {
+                true
+            }
+            R.id.action_sort_by_date -> {
+                true
+            }
+            R.id.action_hide_completed_tasks -> {
+                item.isChecked = !item.isChecked
+                true
+            }
+            R.id.action_delete_completed_tasks -> {
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }
