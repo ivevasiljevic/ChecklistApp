@@ -43,3 +43,8 @@ In this version list adapter class has been added along with DiffUtil to properl
 ### Room search ([v0.0.6](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.6))
 
 In this version room search feature has been added using flow operators.
+
+### Combine multiple flows ([v0.0.7](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.7))
+
+In this version, as opposed to the previous version. multiple variables are taken into account when it comes to filtering recycler view items. Search query, sorting by name and date and hiding completed tasks all are taken into account.
+
