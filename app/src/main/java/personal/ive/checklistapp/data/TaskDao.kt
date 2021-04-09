@@ -2,7 +2,6 @@ package personal.ive.checklistapp.data
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import personal.ive.checklistapp.ui.tasks.SortTasks
 
 /**
  * Created by ivasil on 4/4/2021
