@@ -48,3 +48,4 @@ In this version room search feature has been added using flow operators.
 
 In this version, as opposed to the previous version. multiple variables are taken into account when it comes to filtering recycler view items. Search query, sorting by name and date and hiding completed tasks all are taken into account.
 
+### Jetpack DataStore ([v0.0.8](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.8))

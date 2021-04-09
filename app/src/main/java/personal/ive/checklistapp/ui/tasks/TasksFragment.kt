@@ -6,11 +6,16 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import personal.ive.checklistapp.R
+import personal.ive.checklistapp.data.SortTasks
 import personal.ive.checklistapp.databinding.FragmentTasksBinding
 import personal.ive.checklistapp.util.onQueryTextChanged
 
@@ -49,6 +54,10 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
         searchView.onQueryTextChanged {
             tasksViewModel.searchQuery.value = it
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            menu.findItem(R.id.action_hide_completed_tasks).isChecked = tasksViewModel.preferencesFlow.first().second
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -60,16 +69,16 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
 
         return when(item.itemId) {
             R.id.action_sort_by_name -> {
-                tasksViewModel.sortOrder.value = SortTasks.BY_NAME
+                tasksViewModel.onSortOrderChanged(SortTasks.BY_NAME)
                 true
             }
             R.id.action_sort_by_date -> {
-                tasksViewModel.sortOrder.value = SortTasks.BY_DATE
+                tasksViewModel.onSortOrderChanged(SortTasks.BY_DATE)
                 true
             }
             R.id.action_hide_completed_tasks -> {
                 item.isChecked = !item.isChecked
-                tasksViewModel.isHideCompletedChecked.value = item.isChecked
+                tasksViewModel.onHideCompletedChanged(item.isChecked)
                 true
             }
             R.id.action_delete_completed_tasks -> {
