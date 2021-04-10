@@ -51,3 +51,7 @@ In this version, as opposed to the previous version. multiple variables are take
 ### Jetpack DataStore ([v0.0.8](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.8))
 
 ### Update checked tasks in DB ([v0.0.9](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.9))
+
+### Swipe to delete tasks and add undo action ([v0.0.9](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.9))
+
+In this version swipe to delete feature has been added using **ItemTouchHelper** class and snackbar with **UNDO** action. Fragment and ViewModel have been losely coupled with ViewModel opening a Channel between them and exposing a value that channel sends as a flow. Which then **TasksFragment** collects it and shows a snackbar.
