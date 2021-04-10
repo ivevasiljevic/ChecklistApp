@@ -1,9 +1,8 @@
 package personal.ive.checklistapp.ui.tasks
 
+import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -19,14 +18,14 @@ import personal.ive.checklistapp.data.TaskDao
  * Created by ivasil on 4/5/2021
  */
 
-class TasksViewModel @ViewModelInject constructor(private val taskDao: TaskDao, private val preferencesManager: PreferencesManager): ViewModel() {
+class TasksViewModel @ViewModelInject constructor(private val taskDao: TaskDao, private val preferencesManager: PreferencesManager, @Assisted private val savedState: SavedStateHandle): ViewModel() {
 
-    val searchQuery = MutableStateFlow("")
+    val searchQuery = savedState.getLiveData("searchQuery", "")
     val preferencesFlow = preferencesManager.preferencesFlow
     private val tasksEventChannel = Channel<TasksEvent>()
     val tasksEventChannelFlowMessage = tasksEventChannel.receiveAsFlow()
 
-    private val tasksFlow = combine(searchQuery, preferencesFlow) { searchQuery, preferencesFlow ->
+    private val tasksFlow = combine(searchQuery.asFlow(), preferencesFlow) { searchQuery, preferencesFlow ->
         Pair(searchQuery, preferencesFlow)
     }.flatMapLatest { (searchQuery, preferencesFlow) ->
         taskDao.getTasks(searchQuery, sortOrder = preferencesFlow.first, isHideCompletedChecked = preferencesFlow.second)
@@ -41,7 +40,9 @@ class TasksViewModel @ViewModelInject constructor(private val taskDao: TaskDao, 
         preferencesManager.updateHideCompleted(hideCompleted)
     }
 
-    fun onTaskSelected(task: Task) {}
+    fun onTaskSelected(task: Task) = viewModelScope.launch {
+        tasksEventChannel.send(TasksEvent.NavigateToEditTaskScreen(task))
+    }
 
     fun onTaskCheckboxSelected(task: Task, isChecked: Boolean) = viewModelScope.launch {
         taskDao.updateTask(task.copy(isCompleted = isChecked))
@@ -56,7 +57,13 @@ class TasksViewModel @ViewModelInject constructor(private val taskDao: TaskDao, 
         taskDao.insertTask(task)
     }
 
+    fun onAddNewTaskClick() = viewModelScope.launch {
+        tasksEventChannel.send(TasksEvent.NavigateToAddTaskScreen)
+    }
+
     sealed class TasksEvent {
+        object NavigateToAddTaskScreen : TasksEvent()
+        data class NavigateToEditTaskScreen(val task: Task) : TasksEvent()
         data class ShowUndoDeleteTaskMessage(val task: Task) : TasksEvent()
     }
 }
