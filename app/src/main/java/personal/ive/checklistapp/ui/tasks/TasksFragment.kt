@@ -6,7 +6,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +15,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import personal.ive.checklistapp.R
 import personal.ive.checklistapp.data.SortTasks
+import personal.ive.checklistapp.data.Task
 import personal.ive.checklistapp.databinding.FragmentTasksBinding
 import personal.ive.checklistapp.util.onQueryTextChanged
 
@@ -24,7 +24,7 @@ import personal.ive.checklistapp.util.onQueryTextChanged
  */
 
 @AndroidEntryPoint
-class TasksFragment : Fragment(R.layout.fragment_tasks) {
+class TasksFragment : Fragment(R.layout.fragment_tasks), TasksAdapter.OnItemClickListener {
 
     private val tasksViewModel: TasksViewModel by viewModels()
 
@@ -32,7 +32,7 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentTasksBinding.bind(view)
-        val tasksAdapter = TasksAdapter()
+        val tasksAdapter = TasksAdapter(this)
 
         binding.recyclerViewTasks.apply {
             adapter = tasksAdapter
@@ -58,6 +58,14 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
         viewLifecycleOwner.lifecycleScope.launch {
             menu.findItem(R.id.action_hide_completed_tasks).isChecked = tasksViewModel.preferencesFlow.first().second
         }
+    }
+
+    override fun onItemClick(task: Task) {
+        tasksViewModel.onTaskSelected(task)
+    }
+
+    override fun onCheckboxClick(task: Task, isChecked: Boolean) {
+        tasksViewModel.onTaskCheckboxSelected(task, isChecked)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
