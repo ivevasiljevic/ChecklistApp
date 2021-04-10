@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import personal.ive.checklistapp.data.PreferencesManager
 import personal.ive.checklistapp.data.SortTasks
+import personal.ive.checklistapp.data.Task
 import personal.ive.checklistapp.data.TaskDao
 
 /**
@@ -34,6 +35,12 @@ class TasksViewModel @ViewModelInject constructor(private val taskDao: TaskDao, 
 
     fun onHideCompletedChanged(hideCompleted: Boolean) = viewModelScope.launch {
         preferencesManager.updateHideCompleted(hideCompleted)
+    }
+
+    fun onTaskSelected(task: Task) {}
+
+    fun onTaskCheckboxSelected(task: Task, isChecked: Boolean) = viewModelScope.launch {
+        taskDao.updateTask(task.copy(isCompleted = isChecked))
     }
 }
 
