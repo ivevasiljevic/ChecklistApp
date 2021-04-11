@@ -61,3 +61,5 @@ In this version swipe to delete feature has been added using **ItemTouchHelper**
 ### Add edit fragment logic ([v0.0.12](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.12))
 
 ### Add Dialog Fragment for deleting all completed tasks ([v0.0.13](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v0.0.13))
+
+### All basic and planned features are done ([v1.0.0](https://github.com/ivevasiljevic/ChecklistApp/releases/tag/v1.0.0))
