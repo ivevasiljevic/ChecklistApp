@@ -13,6 +13,8 @@ import personal.ive.checklistapp.data.PreferencesManager
 import personal.ive.checklistapp.data.SortTasks
 import personal.ive.checklistapp.data.Task
 import personal.ive.checklistapp.data.TaskDao
+import personal.ive.checklistapp.ui.addedittask.AddEditTaskViewModel
+import personal.ive.checklistapp.util.exhaustive
 
 /**
  * Created by ivasil on 4/5/2021
@@ -61,10 +63,26 @@ class TasksViewModel @ViewModelInject constructor(private val taskDao: TaskDao, 
         tasksEventChannel.send(TasksEvent.NavigateToAddTaskScreen)
     }
 
+    fun onAddEditResult(result: AddEditTaskViewModel.AddEditTaskEventResult) {
+        when(result) {
+            AddEditTaskViewModel.AddEditTaskEventResult.TASK_ADDED -> { showTaskAddedConfirmationMessage("Task added") }
+            AddEditTaskViewModel.AddEditTaskEventResult.TASK_UPDATED -> { showTaskUpdatedConfirmationMessage("Task updated") }
+        }.exhaustive
+    }
+
+    private fun showTaskUpdatedConfirmationMessage(message: String) = viewModelScope.launch {
+        tasksEventChannel.send(TasksEvent.ShowTaskSavedConfirmationMessage(message))
+    }
+
+    private fun showTaskAddedConfirmationMessage(message: String) = viewModelScope.launch {
+        tasksEventChannel.send(TasksEvent.ShowTaskSavedConfirmationMessage(message))
+    }
+
     sealed class TasksEvent {
         object NavigateToAddTaskScreen : TasksEvent()
         data class NavigateToEditTaskScreen(val task: Task) : TasksEvent()
         data class ShowUndoDeleteTaskMessage(val task: Task) : TasksEvent()
+        data class ShowTaskSavedConfirmationMessage(val message: String) : TasksEvent()
     }
 }
 

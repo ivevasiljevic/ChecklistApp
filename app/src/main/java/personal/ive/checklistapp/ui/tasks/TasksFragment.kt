@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -22,6 +23,7 @@ import personal.ive.checklistapp.R
 import personal.ive.checklistapp.data.SortTasks
 import personal.ive.checklistapp.data.Task
 import personal.ive.checklistapp.databinding.FragmentTasksBinding
+import personal.ive.checklistapp.ui.addedittask.AddEditTaskViewModel
 import personal.ive.checklistapp.util.exhaustive
 import personal.ive.checklistapp.util.onQueryTextChanged
 
@@ -68,6 +70,13 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TasksAdapter.OnItemClic
             }
         }
 
+        setFragmentResultListener("add_edit_request") { _, bundle ->
+            val result = AddEditTaskViewModel.AddEditTaskEventResult.valueOf(
+                bundle.getString("add_edit_result", "")
+            )
+            tasksViewModel.onAddEditResult(result)
+        }
+
         tasksViewModel.tasks.observe(viewLifecycleOwner) {
             tasksAdapter.submitList(it)
         }
@@ -89,6 +98,9 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TasksAdapter.OnItemClic
                     is TasksViewModel.TasksEvent.NavigateToEditTaskScreen -> {
                         val action = TasksFragmentDirections.actionTasksFragmentToAddEditTaskFragment(event.task, "Edit Task")
                         findNavController().navigate(action)
+                    }
+                    is TasksViewModel.TasksEvent.ShowTaskSavedConfirmationMessage -> {
+                        Snackbar.make(requireView(), event.message, Snackbar.LENGTH_LONG).show()
                     }
                 }.exhaustive
             }
